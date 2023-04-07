@@ -35,11 +35,11 @@ wss.on("connection", function (ws: WebSocketClient) {
         );
 
         const res = await axiod.post(
-          "http://127.0.0.1:7147/mota/saveMap/",
+          "http://110.40.151.228:7147/mota/saveMap/",
           map,
         );
         if (res.data.code == 200) {
-          const res2 = await axiod.get("http://127.0.0.1:7147/mota/getMap/");
+          const res2 = await axiod.get("http://110.40.151.228:7147/mota/getMap/");
           for (let i = 0; i < idList.length; i++) {
             objList[i].send(JSON.stringify(res2.data));
           }

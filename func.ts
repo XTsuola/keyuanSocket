@@ -11,7 +11,7 @@ export async function yidongguocheng(
     id: number,
     level: number,
 ) {
-    const res: any = await axiod.get("http://127.0.0.1:7147/mota/getMap/");
+    const res: any = await axiod.get("http://110.40.151.228:7147/mota/getMap/");
     let map = res.data.rows;
     if (map.list[level][x1][y1] == 0) { // 通路
         map.list[level][x1][y1] = id;
@@ -41,7 +41,7 @@ export async function yidongguocheng(
             map.list[level][x][y] = 0;
             map.list[level + 1][x][y] = id;
             await axiod.post(
-                "http://127.0.0.1:7147/mota/updateLevel/",
+                "http://110.40.151.228:7147/mota/updateLevel/",
                 {
                     id: id,
                     level: level + 1
@@ -52,7 +52,7 @@ export async function yidongguocheng(
             map.list[level][x][y] = 0;
             map.list[level + 1][x1 - 1][y1] = id;
             await axiod.post(
-                "http://127.0.0.1:7147/mota/updateLevel/",
+                "http://110.40.151.228:7147/mota/updateLevel/",
                 {
                     id: id,
                     level: level + 1
@@ -63,7 +63,7 @@ export async function yidongguocheng(
             map.list[level][x][y] = 0;
             map.list[level + 1][x1][y1 - 1] = id;
             await axiod.post(
-                "http://127.0.0.1:7147/mota/updateLevel/",
+                "http://110.40.151.228:7147/mota/updateLevel/",
                 {
                     id: id,
                     level: level + 1
@@ -74,7 +74,7 @@ export async function yidongguocheng(
             map.list[level][x][y] = 0;
             map.list[level + 1][x1 + 1][y1] = id;
             await axiod.post(
-                "http://127.0.0.1:7147/mota/updateLevel/",
+                "http://110.40.151.228:7147/mota/updateLevel/",
                 {
                     id: id,
                     level: level + 1
@@ -85,7 +85,7 @@ export async function yidongguocheng(
             map.list[level][x][y] = 0;
             map.list[level + 1][x1][y1 + 1] = id;
             await axiod.post(
-                "http://127.0.0.1:7147/mota/updateLevel/",
+                "http://110.40.151.228:7147/mota/updateLevel/",
                 {
                     id: id,
                     level: level + 1
@@ -98,7 +98,7 @@ export async function yidongguocheng(
             map.list[level][x][y] = 0;
             map.list[level - 1][x][y] = id;
             await axiod.post(
-                "http://127.0.0.1:7147/mota/updateLevel/",
+                "http://110.40.151.228:7147/mota/updateLevel/",
                 {
                     id: id,
                     level: level - 1
@@ -109,7 +109,7 @@ export async function yidongguocheng(
             map.list[level][x][y] = 0;
             map.list[level - 1][x1 - 1][y1] = id;
             await axiod.post(
-                "http://127.0.0.1:7147/mota/updateLevel/",
+                "http://110.40.151.228:7147/mota/updateLevel/",
                 {
                     id: id,
                     level: level - 1
@@ -120,7 +120,7 @@ export async function yidongguocheng(
             map.list[level][x][y] = 0;
             map.list[level - 1][x1][y1 - 1] = id;
             await axiod.post(
-                "http://127.0.0.1:7147/mota/updateLevel/",
+                "http://110.40.151.228:7147/mota/updateLevel/",
                 {
                     id: id,
                     level: level - 1
@@ -131,7 +131,7 @@ export async function yidongguocheng(
             map.list[level][x][y] = 0;
             map.list[level - 1][x1 + 1][y1] = id;
             await axiod.post(
-                "http://127.0.0.1:7147/mota/updateLevel/",
+                "http://110.40.151.228:7147/mota/updateLevel/",
                 {
                     id: id,
                     level: level - 1
@@ -142,13 +142,27 @@ export async function yidongguocheng(
             map.list[level][x][y] = 0;
             map.list[level - 1][x1][y1 + 1] = id;
             await axiod.post(
-                "http://127.0.0.1:7147/mota/updateLevel/",
+                "http://110.40.151.228:7147/mota/updateLevel/",
                 {
                     id: id,
                     level: level - 1
                 },
             );
             map = levelDown(map, id)
+        }
+    } else if (map.list[level][x1][y1] == 61) { // 开启宝箱61号
+        if (map.role[dinwei.findIndex(item => item == id)].bxys > 0) {
+            map.list[level][x1][y1] = id;
+            map.list[level][x][y] = 0;
+            map.role[dinwei.findIndex(item => item == id)].bxys--;
+            map.role[dinwei.findIndex(item => item == id)].clueList.push("获得火把");
+        }
+    } else if (map.list[level][x1][y1] == 62) { // 开启宝箱62号
+        if (map.role[dinwei.findIndex(item => item == id)].bxys > 0) {
+            map.list[level][x1][y1] = id;
+            map.list[level][x][y] = 0;
+            map.role[dinwei.findIndex(item => item == id)].bxys--;
+            map.role[dinwei.findIndex(item => item == id)].clueList.push("获得食物");
         }
     }
 
